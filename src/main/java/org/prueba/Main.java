@@ -14,25 +14,25 @@ public class Main {
     }
 
     public static String[] lista(String ruta) {
-        File dir = new File(ruta);
-        String[] contenido;
+        File archivos = new File(ruta); //Obtengo los archivos de la ruta fijada en la variable de entorno.
+        String[] listaPdf;
 
-        contenido = dir.list(new Filtro(".pdf"));
+        listaPdf = archivos.list(new Filtro(".pdf")); // Filtro los archivos para que sean solo pdf.
 
-        return contenido;
+        return listaPdf;
     }
 
     public static void addPage(String ruta) throws IOException {
-        String[] archivos = lista(ruta);
+        String[] listaPdf = lista(ruta); // Obtengo solo los pdfs.
 
-        for (String contenido: archivos) {
-            File pdf = new File(ruta+"\\"+contenido);
-            PDDocument docu = PDDocument.load(pdf);
-            docu.addPage(new PDPage());
-            docu.save(pdf);
+        for (String contenido: listaPdf) { // Recorro la lista
+            File pdf = new File(ruta+"\\"+contenido); // Genero un objeto file del pdf
+            PDDocument docu = PDDocument.load(pdf); // Cargo el documento
+            docu.addPage(new PDPage()); // Añado un nueva página al documento.
+            docu.save(pdf); // Guardo los cambios y cierro el documento.
             docu.close();
         }
 
     }
-    
+
 }
